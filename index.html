@@ -34,7 +34,8 @@
 
             <ul class="pending" v-show="this.pending.length > 0">
                 <h3>You have <span>{{ this.pending.length }}</span> Pending TODOs</h3>
-                <li v-show="!todo.done" @click.self="completedTodo(todo.id)" v-for="(todo, index) in this.todoList" :key="index" v-custom-color="colors">
+                <li v-show="!todo.done" @click.self="completedTodo(todo.id)" v-for="(todo, index) in this.todoList"
+                    :key="index" v-custom-color="colors">
                     <i @click.self="completedTodo(todo.id)" class="icon-pencil" v-bind:class="{'move-pencile': liIndex == index}"></i>
                     <i class="dot" v-bind:class="{'move-line': liIndex == index}"></i>
                     <span @click.self="completedTodo(todo.id)">{{ todo.title }}</span>
@@ -52,7 +53,9 @@
                 </li>
             </ul>
         </section>
+    </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="app.js"></script>
+
 </html>
