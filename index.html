@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html lang="end">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Keep TODOs alive on browser</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.css'>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="app">
+        <section class="app-wrapper">
+            <h1>Keep TODO<small>s</small> alive on browser</h1>
+            <h2 class="day">{{ today.day }}</h2>
+            <h4>{{ today.date }}</h4>
+
+            <!--  Adding form  -->
+            <form v-on:submit.prevent>
+                <div class="input-container">
+                    <input type="text" id="add-text" v-model="newTodo" @blur="splitDown()">
+                    <label @click="splitUp()" id="text-label" for="add-text">Add the next TODO..!</label>
+                </div>
+                <button @click.prevent @click="addTODOs()" type="button"> + </button>
+            </form>
+
+            <!--  Show form  -->
+            <div class="btn-wrapper">
+                <button class="btn" @click="showCompleted = !showCompleted"> <span v-show="!showCompleted">Show</span>
+                    <span v-show="showCompleted">Hide</span> completed TODOs</button>
+                <button class="btn" @click="clear()">Clear all</button>
+            </div>
+
+            <ul class="pending" v-show="this.pending.length > 0">
+                <h3>You have <span>{{ this.pending.length }}</span> Pending TODOs</h3>
+                <li v-show="!todo.done" @click.self="completedTodo(todo.id)" v-for="(todo, index) in this.todoList" :key="index" v-custom-color="colors">
+                    <i @click.self="completedTodo(todo.id)" class="icon-pencil" v-bind:class="{'move-pencile': liIndex == index}"></i>
+                    <i class="dot" v-bind:class="{'move-line': liIndex == index}"></i>
+                    <span @click.self="completedTodo(todo.id)">{{ todo.title }}</span>
+                    <i class="icon-trash" @click="deleteTODOs(todo)" @mouseover="liIndex = index" @mouseout="liIndex = null"></i>
+                </li>
+            </ul>
+
+            <ul class="completed" v-show="showCompleted">
+                <h3>You have <span>{{ this.completed.length }}</span> Completed TODOs</h3>
+                <li v-show="todo.done" v-for="(todo, index) in this.todoList" :key="index" @click.self="rePendTodo(todo.id)">
+                    <i @click.self="rePendTodo(todo.id)" class="icon-pencil" v-bind:class="{'move-pencile': liIndex == index}"></i>
+                    <i class="dot" v-bind:class="{'move-line': liIndex == index}"></i>
+                    <span @click.self="rePendTodo(todo.id)">{{ todo.title }}</span>
+                    <i class="icon-trash" @click="deleteTODOs(todo)" @mouseover="liIndex = index" @mouseout="liIndex = null"></i>
+                </li>
+            </ul>
+        </section>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="app.js"></script>
+</html>
